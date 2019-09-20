@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript">
+    var _xhr = new XMLHttpRequest();
+    _xhr.open('POST', "json/autos.json", true);
+    _xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+    _xhr.send();
+
+        function verAuto(object_json){
+            console.log(object_json);
+        }
+
+    _xhr.onreadystatechange = function () {
+                if (_xhr.readyState === 4) {
+                    if (_xhr.status === 200) {
+                        var strAutos = _xhr.responseText;
+                        //console.log(strAutos);
+                        var objAutos = JSON.parse(strAutos);
+                        var tabla = '<table border = "3" style="border-collapse:collapse"> <tr><td>ID</td><td>MARCA</td><td>PRECIO</td><td>COLOR</td><td>MODELO</td><td>ACCIONES</td></tr>';
+                        for(var i=0;i<objAutos.length;i++){
+                            tabla +="<tr><td>"+objAutos[i].Id+"</td><td>"+objAutos[i].Marca+"</td><td>"+objAutos[i].Precio+"</td><td>"+objAutos[i].Color+"</td><td>"+objAutos[i].Modelo+"</td><td><input type = button  value = 'Ver auto' onclick='verAuto("+JSON.stringify(objAutos[i])+")'></td></tr>";
+                        }
+                        tabla += "</table>";
+                        document.getElementById("1").innerHTML = tabla;                        
+                    }
+                    else {
+                        if (error !== undefined) {
+                            error(_xhr.status);
+                        }
+                    }
+                }
+    }
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="1">
+
+    </div>
+</body>
+</html>
